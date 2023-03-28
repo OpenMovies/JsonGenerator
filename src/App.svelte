@@ -5,9 +5,23 @@
     let shortname: String;
     let description: String;
 
+    let _genre: String;
+    let genres: Array<String> = [];
     function addGenre() {
-        console.log("addGenre");
+        if (_genre == undefined) return;
+
+        genres.push(_genre);
+        _genre = undefined;
+        genres = genres;
     }
+
+    function removeGenre() {
+        genres.pop();
+        genres = genres;
+    }
+
+    let rating: String;
+    let language: String;
 </script>
 
 <p class="text-center text-black font-serif font-bold text-neutral-800 text-4xl pt-6">OpenMovies Json Generator</p>
@@ -21,10 +35,17 @@
                 <textarea class="textarea w-full my-1 rounded-xl" placeholder="Description" rows="2" bind:value={description}></textarea>
                 <div class="flex flex-row">
                     <p class="ml-4">Genre(s)</p>
+                    {#each genres as g}
+                        <p class="ml-4">{g}</p>
+                    {:else}
+                        <p class="ml-4">No genres added</p>
+                    {/each}
                     <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={addGenre}>Add</button>
-                    <button class="btn btn-ghost btn-sm mr-4">Remove</button>
+                    <button class="btn btn-ghost btn-sm mr-4" on:click={removeGenre}>Remove</button>
                 </div>
-                <input type="text" placeholder="Genre" class="input w-full my-1 rounded-xl" />
+                <input type="text" placeholder="Add Genre" class="input w-full my-1 rounded-xl" bind:value={_genre} />
+                <input type="text" placeholder="Rating" class="input w-full my-1 rounded-xl" bind:value={rating} />
+                <input type="text" placeholder="Language" class="input w-full my-1 rounded-xl" bind:value={language} />
             </div>
         </div>
         <div class="divider lg:divider-horizontal"><Icon icon="ph:arrows-left-right-bold" width="64" height="64" /></div>
