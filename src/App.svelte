@@ -22,6 +22,28 @@
 
     let rating: String;
     let language: String;
+
+    class castMember {
+        name: String
+        role: String
+    }
+
+    let _castMember: castMember;
+
+    let cast: Array<castMember> = [];
+
+    function addCastMember() {
+        if (_castMember == undefined) return;
+
+        cast.push(_castMember);
+        _castMember = undefined;
+        cast = cast;
+    }
+
+    function removeCastMember() {
+        cast.pop();
+        cast = cast;
+    }
 </script>
 
 <p class="text-center text-black font-serif font-bold text-neutral-800 text-4xl pt-6">OpenMovies Json Generator</p>
@@ -46,6 +68,21 @@
                 <input type="text" placeholder="Add Genre" class="input w-full my-1 rounded-xl" bind:value={_genre} />
                 <input type="text" placeholder="Rating" class="input w-full my-1 rounded-xl" bind:value={rating} />
                 <input type="text" placeholder="Language" class="input w-full my-1 rounded-xl" bind:value={language} />
+                <div class="flex flex-row">
+                    <p class="ml-4">Cast</p>
+                    {#each cast as c}
+                        <p class="ml-4">{c.name} as {c.role}</p>
+                        <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={removeCastMember} >Remove</button>
+                    {:else}
+                        <p class="ml-4">No cast members added</p>
+                    {/each}
+                    <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={addCastMember}>Add</button>
+                </div>
+                <div class="flex flex-row">
+                    <input type="text" placeholder="Name" class="input my-1 rounded-xl" bind:value={_castMember.name} />
+                    <input type="text" placeholder="Role" class="input my-1 rounded-xl" bind:value={_castMember.role} />
+                    <button class="btn btn-ghost btn-sm ml-auto mr-4">Add</button>
+                </div>
             </div>
         </div>
         <div class="divider lg:divider-horizontal"><Icon icon="ph:arrows-left-right-bold" width="64" height="64" /></div>
