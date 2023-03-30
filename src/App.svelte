@@ -40,14 +40,14 @@
         cast = cast;
     }
 
-    function removeCastMember(index: number) {
+    function removeCastMember(index: any) {
         cast.splice(index, 1)
         cast = cast;
         return index;
     }
 </script>
 
-<p class="text-center text-black font-serif font-bold text-neutral-800 text-4xl pt-6">OpenMovies Json Generator</p>
+<p class="text-center font-serif font-bold text-neutral-800 text-4xl pt-6">OpenMovies Json Generator</p>
 
 <div class="bg-white rounded-xl justify-center mx-6 mt-6">
     <div class="flex flex-col w-full lg:flex-row">
@@ -74,7 +74,7 @@
                     {#each cast as c}
                         <div class="flex-row">
                             <p class="ml-4">{c.name} as {c.role}</p>
-                            <button class="btn btn-ghost btn-sm mr-4" on:click={() => removeCastMember(c.index)}>Remove</button>
+                            <button class="btn btn-ghost btn-sm mr-4" on:click={() => removeCastMember(c)}>Remove</button>
                         </div>
                     {:else}
                         <p class="ml-4">No cast members added</p>
