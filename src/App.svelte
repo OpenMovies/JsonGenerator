@@ -28,7 +28,7 @@
         role: String
     }
 
-    let _castMember: castMember;
+    let _castMember: castMember = new castMember();
 
     let cast: Array<castMember> = [];
 
@@ -36,13 +36,14 @@
         if (_castMember == undefined) return;
 
         cast.push(_castMember);
-        _castMember = undefined;
+        _castMember = new castMember();
         cast = cast;
     }
 
-    function removeCastMember() {
-        cast.pop();
+    function removeCastMember(index: number) {
+        cast.splice(index, 1)
         cast = cast;
+        return index;
     }
 </script>
 
@@ -68,20 +69,21 @@
                 <input type="text" placeholder="Add Genre" class="input w-full my-1 rounded-xl" bind:value={_genre} />
                 <input type="text" placeholder="Rating" class="input w-full my-1 rounded-xl" bind:value={rating} />
                 <input type="text" placeholder="Language" class="input w-full my-1 rounded-xl" bind:value={language} />
-                <div class="flex flex-row">
+                <div class="flex flex-col">
                     <p class="ml-4">Cast</p>
                     {#each cast as c}
-                        <p class="ml-4">{c.name} as {c.role}</p>
-                        <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={removeCastMember} >Remove</button>
+                        <div class="flex-row">
+                            <p class="ml-4">{c.name} as {c.role}</p>
+                            <button class="btn btn-ghost btn-sm mr-4" on:click={() => removeCastMember(c.index)}>Remove</button>
+                        </div>
                     {:else}
                         <p class="ml-4">No cast members added</p>
                     {/each}
-                    <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={addCastMember}>Add</button>
                 </div>
                 <div class="flex flex-row">
                     <input type="text" placeholder="Name" class="input my-1 rounded-xl" bind:value={_castMember.name} />
                     <input type="text" placeholder="Role" class="input my-1 rounded-xl" bind:value={_castMember.role} />
-                    <button class="btn btn-ghost btn-sm ml-auto mr-4">Add</button>
+                    <button class="btn btn-ghost btn-sm ml-auto mr-4" on:click={addCastMember}>Add</button>
                 </div>
             </div>
         </div>
