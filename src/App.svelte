@@ -11,13 +11,13 @@
         cast: Array<{
             name: String
             role: String
-        }>
+        }> = []
         crew: {
             director: Array<String>
             producer: Array<String>
             writer: Array<String>
         }
-        distributor: Array<String>
+        distributor: Array<String> = []
         boxOffice: {
             budget: String
             gross: {
@@ -34,7 +34,7 @@
             month: Number
             day: Number
         }
-        countryOfOrigin: Array<String>
+        countryOfOrigin: Array<String> = []
         runtime: {
             hours: Number
             minutes: Number
@@ -65,23 +65,21 @@
 
     let _castMember: castMember = new castMember();
 
-    let cast: Array<castMember> = [];
-
     function addCastMember() {
         if (_castMember == undefined) return;
 
-        cast.push(_castMember);
+        movie.cast.push(_castMember);
         _castMember = new castMember();
-        cast = cast;
+        movie.cast = movie.cast;
     }
 
     function removeCastMember(index: any) {
-        cast.splice(index, 1)
-        cast = cast;
+        movie.cast.splice(index, 1)
+        movie.cast = movie.cast;
         return index;
     }
 
-    $: movieJson = JSON.stringify(movie);
+    $: movieJson = JSON.stringify(movie, null, 2);
 </script>
 
 <p class="text-center font-serif font-bold text-neutral-800 text-4xl pt-6">OpenMovies Json Generator</p>
@@ -108,7 +106,7 @@
                 <input type="text" placeholder="Language" class="input w-full my-1 rounded-xl" bind:value={movie.language} />
                 <div class="flex flex-col">
                     <p class="ml-4">Cast</p>
-                    {#each cast as c}
+                    {#each movie.cast as c}
                         <div class="flex-row">
                             <p class="ml-4">{c.name} as {c.role}</p>
                             <button class="btn btn-ghost btn-sm mr-4" on:click={() => removeCastMember(c)}>Remove</button>
@@ -126,7 +124,9 @@
         </div>
         <div class="divider lg:divider-horizontal"><Icon icon="ph:arrows-left-right-bold" width="64" height="64" /></div>
         <div class="grid flex-grow h-32 card rounded-box">
-            {movieJson}
+            <pre>
+                <p>{movieJson}</p>
+            </pre>
         </div>
     </div>
 </div>
